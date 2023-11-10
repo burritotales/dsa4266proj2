@@ -12,15 +12,14 @@ import os
 import pickle
 print('done importing necessary packages')
 
-# dataset_path = '../input/SGNex_A549_directRNA_replicate5_run1.json.gz'
-dataset_path = '../input/dataset2.json.gz'
-main_path = '../'
-col_list_path = '../input/col_list.txt'
 
+main_path = './'
+col_list_path = 'input/col_list.txt'
+dataset_directory = 'input/'
 
 def preprocessing_data(dataset_path, files):
     # Check if it has been processed before
-    processed_path = '../processed/' + files + '_processed.csv.gz'
+    processed_path = 'processed/' + files + '_processed.csv.gz'
 
     if os.path.isfile(processed_path):
         print('processed csv exists, skipping preprocessing step')
@@ -114,23 +113,32 @@ def nucleotides_as_cat(df):
 
 # Function to produce intermediate submission csv
 
-def create_output(dataset_path, file_name, model_name, paths, col_list, files):
+def create_output(model_name, paths):
     # Preprocessing files
     print('preprocessing data file...')
-    df = preprocessing_data(dataset_path, files)
+    df = preprocessing_data(paths['download_file_path'], paths['dataset'])
     processed_data_df_model = nucleotides_as_cat(df)    
+    
+    # List of features selected
+    col_list = ['nucleotides_position', 'combined_reads_p0_t2_v1', 'combined_reads_p0_t3_v1', 'combined_reads_p0_t3_v4', 
+                'combined_reads_p1_t3_v4', 'combined_reads_p0_t2_v2', 'nucleotides_position+1', 'combined_reads_p1_t3_v1', 
+                'nucleotides_position-1', 'transcript_position', 'combined_reads_p0_t3_v2', 'combined_reads_p-1_t3_v4', 
+                'combined_reads_p0_t1_v1', 'combined_reads_p0_t2_v4', 'combined_reads_p1_t2_v1', 'combined_reads_p1_t3_v3', 
+                'combined_reads_p1_t2_v2', 'combined_reads_p-1_t2_v2', 'combined_reads_p1_t1_v1', 'combined_reads_p1_t3_v2', 
+                'combined_reads_p-1_t2_v1', 'combined_reads_p-1_t3_v2', 'combined_reads_p-1_t3_v1', 'combined_reads_p0_t1_v3', 
+                'combined_reads_p0_t1_v2', 'combined_reads_p0_t2_v3', 'combined_reads_p0_t1_v4', 'combined_reads_p-1_t2_v4', 'combined_reads_p0_t3_v3']
     
     # # Keeping list of transcript ids to match to predictions
     dataset_pred, transcript_ids = create_pred_set(processed_data_df_model, col_list)
     transcript_position = dataset_pred['transcript_position']
 
-    loaded_model = joblib.load(paths['xgboost_feature_selection'] )
+    loaded_model = joblib.load(paths[model_name])
     dataset_output_probs = pd.DataFrame(loaded_model.predict_proba(dataset_pred)[:,1])
 
     dataset_output_probs.columns = ['score']
     pdList = [transcript_ids, transcript_position, dataset_output_probs]  # List of your dataframes
     new_df = pd.concat(pdList, axis=1)
-    new_df.to_csv(paths['main_path']+'output/' + file_name, index=False)
+    new_df.to_csv( paths['main_path'] + paths['output_file_name'], index=False)
    
 
 # Function to format prediction data and keep transcript id
@@ -149,21 +157,26 @@ def create_pred_set(df, col_list):
 
 print('done defining functions')
 
-# Define your own model paths to load the models
-paths = {'main_path': main_path, 
-    'xgboost_feature_selection': main_path +"model/" + "top_features_xgboost_model.pkl"
-}
-
-#read in the feature selection file
-with open(col_list_path, "rb") as fp:   #to read in the txt file as a list - to use in the prediction.py file
-    col_list = pickle.load(fp)
+for root, dirs, files in os.walk(dataset_directory):
+        samples = []
+        for filename in files:
+            if filename.endswith('.json.gz'):
+                dataset = filename.split('.json.gz')[0]
+                #download_file_path = main_path + 'input/' + files + '.json.gz'
+                #output_file_name = main_path + 'output/' + files + '_output.csv'
+                download_file_path =  'input/' + dataset + '.json.gz'
+                output_file_name = 'output/' + dataset + '_output.csv'
+                
+                # Define your own model paths to load the models
+                paths = {'main_path': main_path, 
+                    'xgboost_feature_selection': main_path +"model/" + "top_features_xgboost_model.pkl",
+                    'download_file_path': download_file_path,
+                    'output_file_name': output_file_name,
+                    'dataset': dataset
+                }
+                
+                create_output('xgboost_feature_selection', paths)
+                print('prediction complete! output is saved as' + output_file_name)
+        
     
-# read in all the sgnex data
-# list_of_files = ["SGNex_A549_directRNA_replicate5_run1"]
-list_of_files = ["dataset2"]
-
-for files in list_of_files:
-    download_file_path = main_path + 'input/' + files + '.json.gz'
-    output_file_name = main_path + 'output/' + files + '_output.csv'
-    create_output(download_file_path, output_file_name, 'xgboost_feature_selection', paths, col_list, files)
-    print('prediction complete! output is saved as' + output_file_name)
+    
