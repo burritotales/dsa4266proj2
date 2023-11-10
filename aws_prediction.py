@@ -14,12 +14,12 @@ print('done importing necessary packages')
 
 
 main_path = './'
-col_list_path = 'input/col_list.txt'
-dataset_directory = 'input/'
+# col_list_path = '../input/col_list.txt'
+dataset_directory = '../input/'
 
 def preprocessing_data(dataset_path, files):
     # Check if it has been processed before
-    processed_path = 'processed/' + files + '_processed.csv.gz'
+    processed_path = '../processed/' + files + '_processed.csv.gz'
 
     if os.path.isfile(processed_path):
         print('processed csv exists, skipping preprocessing step')
@@ -164,8 +164,8 @@ for root, dirs, files in os.walk(dataset_directory):
                 dataset = filename.split('.json.gz')[0]
                 #download_file_path = main_path + 'input/' + files + '.json.gz'
                 #output_file_name = main_path + 'output/' + files + '_output.csv'
-                download_file_path =  'input/' + dataset + '.json.gz'
-                output_file_name = 'output/' + dataset + '_output.csv'
+                download_file_path =  '../input/' + dataset + '.json.gz'
+                output_file_name = '../output/' + dataset + '_output.csv'
                 
                 # Define your own model paths to load the models
                 paths = {'main_path': main_path, 
