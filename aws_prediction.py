@@ -169,7 +169,7 @@ for root, dirs, files in os.walk(dataset_directory):
                 
                 # Define your own model paths to load the models
                 paths = {'main_path': main_path, 
-                    'xgboost_feature_selection': main_path +"model/" + "top_features_xgboost_model.pkl",
+                    'xgboost_feature_selection': "../model/" + "top_features_xgboost_model.pkl",
                     'download_file_path': download_file_path,
                     'output_file_name': output_file_name,
                     'dataset': dataset
