@@ -50,7 +50,7 @@ wget -P py https://raw.githubusercontent.com/burritotales/dsa4266proj2/main/aws_
 ```
 This is the git link to the sample dataset, it can be replaced with other datasets.
 ```
-wget -P input https://github.com/burritotales/dsa4266proj2/raw/main/dataset2.json.gz https://github.com/burritotales/dsa4266proj2/raw/main/col_list.txt
+wget -P input https://github.com/burritotales/dsa4266proj2/raw/main/dataset2.json.gz
 ```
 
 ### 4. Run the py script 
