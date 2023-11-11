@@ -62,7 +62,7 @@ python3 py/aws_prediction.py
 ### 5.	View the output file 
 This is to view the output of the sample dataset, change the path if you used other datasets.
 ```
-nano ../output/dataset2_output.csv 
+nano output/dataset2_output.csv 
 ```
 Press `CTRL + X` to exit view
 
