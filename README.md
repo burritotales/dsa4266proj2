@@ -55,14 +55,15 @@ wget -P input https://github.com/burritotales/dsa4266proj2/raw/main/dataset2.jso
 
 ### 4. Run the py script 
 ```
-python3 py/aws_prediction.py
+cd py
+python3 aws_prediction.py
 ```
 \* The prediction will run all on `.json.gz` files in the 'input' directory, if the corresponding processed `.csv.gz` file is not in the 'processed' directory.
 
 ### 5.	View the output file 
 This is to view the output of the sample dataset, change the path if you used other datasets.
 ```
-nano output/dataset2_output.csv 
+nano ../output/dataset2_output.csv 
 ```
 Press `CTRL + X` to exit view
 
