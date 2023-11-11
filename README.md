@@ -55,8 +55,7 @@ wget -P input https://github.com/burritotales/dsa4266proj2/raw/main/dataset2.jso
 
 ### 4. Run the py script 
 ```
-cd py
-python3 aws_prediction.py
+python3 py/aws_prediction.py
 ```
 \* The prediction will run all on `.json.gz` files in the 'input' directory, if the corresponding processed `.csv.gz` file is not in the 'processed' directory.
 
