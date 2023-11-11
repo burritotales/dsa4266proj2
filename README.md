@@ -2,7 +2,7 @@
 
 ## About the Model
 
-XGBoost ...
+The project’s goal is the identification of m6A (N6-methyladenosine) RNA modifications within transcripts, achieved through the development of a robust machine learning model. By using the XGBoost machine learning model, we aim to effectively distinguish between modified and unmodified sites within RNA sequences by integrating direct RNA-Seq data. The success of the project hinges on efficiently utilising the data to extract features indicative of m6A modifications.
 
 ## Prediction on Sample Dataset
 
