@@ -120,13 +120,8 @@ def create_output(model_name, paths):
     processed_data_df_model = nucleotides_as_cat(df)    
     
     # List of features selected
-    col_list = ['nucleotides_position', 'combined_reads_p0_t2_v1', 'combined_reads_p0_t3_v1', 'combined_reads_p0_t3_v4', 
-                'combined_reads_p1_t3_v4', 'combined_reads_p0_t2_v2', 'nucleotides_position+1', 'combined_reads_p1_t3_v1', 
-                'nucleotides_position-1', 'transcript_position', 'combined_reads_p0_t3_v2', 'combined_reads_p-1_t3_v4', 
-                'combined_reads_p0_t1_v1', 'combined_reads_p0_t2_v4', 'combined_reads_p1_t2_v1', 'combined_reads_p1_t3_v3', 
-                'combined_reads_p1_t2_v2', 'combined_reads_p-1_t2_v2', 'combined_reads_p1_t1_v1', 'combined_reads_p1_t3_v2', 
-                'combined_reads_p-1_t2_v1', 'combined_reads_p-1_t3_v2', 'combined_reads_p-1_t3_v1', 'combined_reads_p0_t1_v3', 
-                'combined_reads_p0_t1_v2', 'combined_reads_p0_t2_v3', 'combined_reads_p0_t1_v4', 'combined_reads_p-1_t2_v4', 'combined_reads_p0_t3_v3']
+    col_list = ['nucleotides_position', 'combined_reads_p0_t2_v1', 'combined_reads_p0_t3_v1', 'combined_reads_p0_t3_v4', 'combined_reads_p1_t3_v4',
+                'combined_reads_p1_t3_v1', 'combined_reads_p0_t2_v2', 'nucleotides_position+1']
     
     # # Keeping list of transcript ids to match to predictions
     dataset_pred, transcript_ids = create_pred_set(processed_data_df_model, col_list)
@@ -169,7 +164,7 @@ for root, dirs, files in os.walk(dataset_directory):
                 
                 # Define your own model paths to load the models
                 paths = {'main_path': main_path, 
-                    'xgboost_feature_selection': "model/" + "top_features_xgboost_model.pkl",
+                    'xgboost_feature_selection': "model/" + "xgboost.pkl",
                     'download_file_path': download_file_path,
                     'output_file_name': output_file_name,
                     'dataset': dataset
