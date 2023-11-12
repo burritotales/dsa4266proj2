@@ -172,7 +172,7 @@ for root, dirs, files in os.walk(dataset_directory):
                 }
                 
                 create_output('xgboost_feature_selection', paths)
-                print('prediction complete! output is saved as' + output_file_name)
+                print('prediction complete! output is saved as ' + output_file_name)
         
     
     
