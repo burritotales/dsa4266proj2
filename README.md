@@ -45,7 +45,7 @@ mkdir processed output
 
 ### 4. Download the input files
 ```
-wget -P model https://github.com/burritotales/dsa4266proj2/raw/main/top_features_xgboost_model.pkl
+wget -P model https://github.com/burritotales/dsa4266proj2/raw/main/xgboost.pkl
 wget -P py https://raw.githubusercontent.com/burritotales/dsa4266proj2/main/aws_prediction.py
 ```
 This is the git link to the sample dataset, it can be replaced with other datasets.
