@@ -124,8 +124,7 @@ def create_output(model_name, paths):
                 'combined_reads_p1_t3_v1', 'combined_reads_p0_t2_v2', 'nucleotides_position+1']
     
     # # Keeping list of transcript ids to match to predictions
-    dataset_pred, transcript_ids = create_pred_set(processed_data_df_model, col_list)
-    transcript_position = dataset_pred['transcript_position']
+    dataset_pred, transcript_ids, transcript_position = create_pred_set(processed_data_df_model, col_list)
 
     loaded_model = joblib.load(paths[model_name])
     dataset_output_probs = pd.DataFrame(loaded_model.predict_proba(dataset_pred)[:,1])
@@ -145,10 +144,12 @@ def create_pred_set(df, col_list):
     
     df = df.drop(columns=drop_cols)
     df['transcript_position'] = df['transcript_position'].astype(int) #change to int because currently it's an object dtype
+    transcript_position = df['transcript_position']
+    
     if col_list:
         df = df[col_list]
     
-    return df,transcript_ids
+    return df,transcript_ids, transcript_position
 
 print('done defining functions')
 
